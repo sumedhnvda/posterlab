@@ -13,6 +13,7 @@ export default function PosterPreview({ data }) {
     date,
     time,
     registrationLink,
+    eventType
   } = data;
 
   return (
@@ -24,14 +25,14 @@ export default function PosterPreview({ data }) {
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.1, // Faded watermark effect
+          opacity: 0.1, 
           zIndex: -1,
-          borderRadius: '50%', // Make the image round
-          height: '900px', // Set the desired height
-          width: '700px', // Set the width to be equal to height
+          borderRadius: '50%',
+          height: '900px', 
+          width: '700px',
           left: '50%',
           top: '50%',
-          transform: 'translate(-50%, -50%)', // Center the image
+          transform: 'translate(-50%, -50%)',
         }}
       />
       
@@ -73,8 +74,12 @@ export default function PosterPreview({ data }) {
         )}
       </div>
       <div className="mt-12 text-center px-8">
-        <h3 className="text-xl">Organizing a Session</h3>
-        <h3 className="text-xl mt-2">on</h3>
+        {eventType && (
+          <>
+            <h3 className="text-xl">Organizing a {eventType}</h3>
+            <h3 className="text-xl mt-2">on</h3>
+          </>
+        )}
         {eventTitle && (
           <h2 className="text-4xl font-bold text-[#800020] mt-4 px-4">
             {eventTitle}

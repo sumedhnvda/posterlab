@@ -112,6 +112,19 @@ export default function PosterForm({ onSubmit, initialData }) {
           ))}
         </div>
       </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Event Type</label>
+        <select
+          value={formData.eventType}
+          onChange={(e) => handleChange('eventType', e.target.value)}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+        >
+          <option value="">Select Event Type</option>
+          <option value="Session">Session</option>
+          <option value="Talk">Talk</option>
+          <option value="Workshop">Workshop</option>
+        </select>
+      </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700">Event Title</label>
