@@ -12,20 +12,29 @@ export default function PosterPreview({ data }) {
     location,
     date,
     time,
-    registrationLink
+    registrationLink,
   } = data;
 
   return (
-    <div
-      className="w-[794px] h-[1123px] bg-white relative mx-auto overflow-hidden"
-      id="poster"
-      style={{ 
-        minHeight: '1123px',
-        maxWidth: '794px',
-        transform: 'scale(1)',
-        transformOrigin: 'top center'
-      }}
-    >
+    <div className="w-[794px] h-[1123px] relative mx-auto overflow-hidden" id="poster">
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url('https://media.licdn.com/dms/image/v2/C561BAQEPwPL0FtzJ9w/company-background_10000/company-background_10000/0/1595394497735/shri_madhwa_vadiraja_institute_of_technology_and_management_cover?e=2147483647&v=beta&t=iCbNHWzzqUYBBb34B6wEAK8RrywNWvrKIqz9-oxprVk')`,
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.1, // Faded watermark effect
+          zIndex: -1,
+          borderRadius: '50%', // Make the image round
+          height: '900px', // Set the desired height
+          width: '700px', // Set the width to be equal to height
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)', // Center the image
+        }}
+      />
+      
       <div className="bg-[#800020] h-[80px] flex items-center justify-between px-8">
         <div className="flex-grow text-center">
           <h1 className="text-md font-bold text-white">
@@ -35,9 +44,9 @@ export default function PosterPreview({ data }) {
             A Unit of Shri Sode Vadiraja Mutt Educational Trust, Udupi.
           </p>
         </div>
-        <img 
-          src="smvitm-college-logo.png" 
-          alt="SMVITM Logo" 
+        <img
+          src="smvitm-college-logo.png"
+          alt="SMVITM Logo"
           className="w-29 h-16"
           loading="eager"
         />
@@ -67,7 +76,9 @@ export default function PosterPreview({ data }) {
         <h3 className="text-xl">Organizing a Session</h3>
         <h3 className="text-xl mt-2">on</h3>
         {eventTitle && (
-          <h2 className="text-4xl font-bold text-[#800020] mt-4 px-4">{eventTitle}</h2>
+          <h2 className="text-4xl font-bold text-[#800020] mt-4 px-4">
+            {eventTitle}
+          </h2>
         )}
       </div>
 
@@ -113,8 +124,8 @@ export default function PosterPreview({ data }) {
         </p>
         {registrationLink && (
           <div className="absolute bottom-20 right-8">
-            <QRCode 
-              value={registrationLink} 
+            <QRCode
+              value={registrationLink}
               size={120}
               level="H"
               className="bg-white p-2"
