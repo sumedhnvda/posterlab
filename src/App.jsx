@@ -52,7 +52,7 @@ function App() {
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold text-center mb-8">Event Poster Generator for SMVITM</h1>
-        <a href="https://github.com/sumedhnvda">
+        <a href="https://github.com/sumedhnvda/posterlab">
         <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200">Github</button>
           </a> 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
