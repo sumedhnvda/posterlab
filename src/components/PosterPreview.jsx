@@ -79,8 +79,8 @@ export default function PosterPreview({ data }) {
           src="smvitm-college-logo.png"
           alt="SMVITM Logo"
           style={{
-            width: '30mm',
-            height: '30mm',
+            width: '20mm',
+            height: '20mm',
             objectFit: 'contain',
           }}
           loading="eager"
