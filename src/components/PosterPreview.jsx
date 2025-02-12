@@ -17,29 +17,20 @@ export default function PosterPreview({ data }) {
   } = data;
 
   return (
-<div
-  style={{
-    backgroundImage:
-      "url('https://media.licdn.com/dms/image/v2/C561BAQEPwPL0FtzJ9w/company-background_10000/company-background_10000/0/1595394497735/shri_madhwa_vadiraja_institute_of_technology_and_management_cover?e=2147483647&v=beta&t=iCbNHWzzqUYBBb34B6wEAK8RrywNWvrKIqz9-oxprVk')",
-    backgroundSize: 'contain', // Ensures the image fits within the container
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    opacity: 0.1, // Makes the background faint
-    position: 'relative',
-    width: '210mm', // A4 width
-    height: '297mm', // A4 height
-    margin: '0 auto', // Centers the div horizontally
-    border: '1px solid #ddd', // Optional border for visibility
-    borderRadius: '5px', // Slightly rounded corners
-    fontFamily: "'Roboto', sans-serif", // Font styling
-    backgroundColor: '#fff', // Ensures a white base for content
-    padding: '20mm', // Adds padding around content
-    overflow: 'hidden', // Prevents content overflow
-  }}
-  id="poster"
->
-
-
+  <div
+      style={{
+        width: '210mm',
+        height: '297mm',
+        margin: '0 auto',
+        position: 'relative',
+        fontFamily: "'Roboto', sans-serif",
+        background: '#fff',
+        border: '1px solid #ddd',
+        padding: '10mm',
+        overflow: 'hidden', 
+      }}
+      id="poster"      
+    > 
       {/* Header */}
       <div
         style={{
