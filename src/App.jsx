@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { toPng } from 'html-to-image';
+import { toPng } from 'html-to-image'; // Use toPng for easier download
 import PosterForm from './components/PosterForm';
 import PosterPreview from './components/PosterPreview';
 import { Download } from 'lucide-react';
@@ -19,23 +19,18 @@ function App() {
   });
 
   const downloadPoster = useCallback(async () => {
-    const poster = document.getElementById('poster');
+    const poster = document.getElementById('poster-a4');
     if (poster) {
       try {
-        const dataUrl = await toPng(poster, {
-          quality: 1,
-          pixelRatio: 3,
-          cacheBust: true,
-          backgroundColor: '#ffffff',
-          style: {
-            transform: 'scale(1)',
-            transformOrigin: 'top center',
-          },
+        const png = await toPng(poster, {
+          width: 2480, // A4 width in pixels (300 DPI)
+          height: 3508, // A4 height in pixels (300 DPI)
+          backgroundColor: '#ffffff', // White background
         });
 
         const link = document.createElement('a');
-        link.download = `event-poster-${new Date().toISOString().split('T')[0]}.png`; // Fixed template literal
-        link.href = dataUrl;
+        link.download = `event-poster-${new Date().toISOString().split('T')[0]}.png`;
+        link.href = png;
         link.click();
       } catch (error) {
         console.error('Error generating poster:', error);
@@ -49,18 +44,19 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold text-center mb-8">
-          Event Poster Generator for SMVITM
-        </h1>
-        <a href="https://github.com/sumedhnvda/posterlab">
+        <h1 className="text-3xl font-bold text-center mb-8">Event Poster Generator for SMVITM</h1>
+        <a href="https://github.com/sumedhnvda/posterlab" target="_blank" rel="noopener noreferrer">
           <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200">
-            Github
+            GitHub
           </button>
         </a>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+          {/* Poster Form Section */}
           <div className="bg-white rounded-lg shadow-lg p-6">
             <PosterForm onSubmit={setPosterData} initialData={posterData} />
           </div>
+
+          {/* Poster Preview and Download Section */}
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex justify-end mb-4">
               <button
@@ -73,10 +69,13 @@ function App() {
             </div>
             <div className="flex justify-center items-center overflow-hidden">
               <div
-                className="transform scale-[0.65] origin-top lg:scale-[0.75]"
+                id="poster-a4"
+                className="relative bg-white border"
                 style={{
-                  width: 'fit-content',
-                  height: 'fit-content',
+                  width: '210mm',
+                  height: '297mm',
+                  padding: '20px', // Adjust for margins
+                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
                 }}
               >
                 <PosterPreview data={posterData} />
