@@ -22,21 +22,19 @@ function App() {
     const poster = document.getElementById('poster');
     if (poster) {
       try {
-        
-        const dataUrl = await toPng(poster, { 
+        const dataUrl = await toPng(poster, {
           quality: 1,
           pixelRatio: 3,
           cacheBust: true,
           backgroundColor: '#ffffff',
           style: {
-            transform: 'scale(1)', 
+            transform: 'scale(1)',
             transformOrigin: 'top center',
           },
         });
 
-
         const link = document.createElement('a');
-        link.download = event-poster-${new Date().toISOString().split('T')[0]}.png;
+        link.download = `event-poster-${new Date().toISOString().split('T')[0]}.png`; // Fixed template literal
         link.href = dataUrl;
         link.click();
       } catch (error) {
@@ -51,10 +49,14 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold text-center mb-8">Event Poster Generator for SMVITM</h1>
+        <h1 className="text-3xl font-bold text-center mb-8">
+          Event Poster Generator for SMVITM
+        </h1>
         <a href="https://github.com/sumedhnvda/posterlab">
-        <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200">Github</button>
-          </a> 
+          <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200">
+            Github
+          </button>
+        </a>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <PosterForm onSubmit={setPosterData} initialData={posterData} />
@@ -62,7 +64,7 @@ function App() {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex justify-end mb-4">
               <button
-                onClick={downloadPoster} 
+                onClick={downloadPoster}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200"
               >
                 <Download className="h-5 w-5 mr-2" />
