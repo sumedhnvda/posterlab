@@ -10,10 +10,10 @@ export default function PosterPreview({ data }) {
     speakerPhoto,
     speakerDesignation,
     location,
-    dates, // Updated to accept multiple dates
+    dates,
     time,
     registrationLink,
-    eventType
+    eventType,
   } = data;
 
   return (
@@ -26,7 +26,7 @@ export default function PosterPreview({ data }) {
         fontFamily: "'Roboto', sans-serif",
         background: '#fff',
         border: '1px solid #ddd',
-        padding: '10mm'
+        padding: '10mm',
       }}
       id="poster"
     >
@@ -38,8 +38,8 @@ export default function PosterPreview({ data }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 16px',
           color: 'white',
+          width: '100%',
         }}
       >
         <div style={{ textAlign: 'center', flex: 1 }}>
@@ -79,7 +79,7 @@ export default function PosterPreview({ data }) {
               fontSize: '24px',
               fontWeight: 'bold',
               textAlign: 'center',
-              fontFamily: "'Roboto', sans-serif",
+              fontFamily: "'Coveas', sans-serif",
             }}
           >
             {departmentName}
@@ -215,18 +215,20 @@ export default function PosterPreview({ data }) {
             <p style={{ fontSize: '20px', marginTop: '16px', fontFamily: "'Open Sans', sans-serif" }}>
               on
             </p>
-            {dates.map((date, index) => (
-              <p
-                key={index}
-                style={{
-                  fontSize: '20px',
-                  fontFamily: "'Roboto', sans-serif",
-                  marginTop: '4px',
-                }}
-              >
-                {new Date(date).toLocaleDateString()} at {time}
-              </p>
-            ))}
+            <ul style={{ listStyle: 'none', padding: 0, margin: '16px 0' }}>
+              {dates.map((date, index) => (
+                <li
+                  key={index}
+                  style={{
+                    fontSize: '20px',
+                    fontFamily: "'Roboto', sans-serif",
+                    marginTop: '4px',
+                  }}
+                >
+                  {new Date(date).toLocaleDateString()} at {time}
+                </li>
+              ))}
+            </ul>
           </>
         )}
       </div>
