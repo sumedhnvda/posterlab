@@ -19,21 +19,17 @@ function App() {
   });
 
   const downloadPoster = useCallback(async () => {
-    const poster = document.getElementById('poster');
+    const poster = document.getElementById('poster-a4'); // Target only the A4 poster preview
     if (poster) {
       try {
-        
         const dataUrl = await toPng(poster, { 
           quality: 1,
-          pixelRatio: 3,
+          pixelRatio: 3, // Higher pixel ratio for better quality
           cacheBust: true,
-          backgroundColor: '#ffffff',
-          style: {
-            transform: 'scale(1)', 
-            transformOrigin: 'top center',
-          },
+          backgroundColor: '#ffffff', // Ensure the background is white
+          width: 2480, // A4 width at 300 DPI
+          height: 3508, // A4 height at 300 DPI
         });
-
 
         const link = document.createElement('a');
         link.download = `event-poster-${new Date().toISOString().split('T')[0]}.png`;
@@ -53,8 +49,10 @@ function App() {
       <div className="container mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold text-center mb-8">Event Poster Generator for SMVITM</h1>
         <a href="https://github.com/sumedhnvda/posterlab">
-        <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200">Github</button>
-          </a> 
+          <button className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200">
+            Github
+          </button>
+        </a>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <PosterForm onSubmit={setPosterData} initialData={posterData} />
@@ -62,7 +60,7 @@ function App() {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <div className="flex justify-end mb-4">
               <button
-                onClick={downloadPoster} 
+                onClick={downloadPoster}
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#800020] hover:bg-[#600018] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800020] transition-colors duration-200"
               >
                 <Download className="h-5 w-5 mr-2" />
@@ -71,6 +69,7 @@ function App() {
             </div>
             <div className="flex justify-center items-center overflow-hidden">
               <div
+                id="poster-a4" // Added ID for targeting the A4 poster
                 className="transform scale-[0.65] origin-top lg:scale-[0.75]"
                 style={{
                   width: 'fit-content',
