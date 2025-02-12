@@ -30,46 +30,60 @@ export default function PosterPreview({ data }) {
       }}
       id="poster"
     >
-      {/* Header */}
-      <div
-        style={{
-          backgroundColor: '#800020',
-          height: '80px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          color: 'white',
-          width: '100%',
-        }}
-      >
-        <div style={{ textAlign: 'center', flex: 1 }}>
-          <h1
-            style={{
-              fontSize: '18px',
-              fontWeight: 'bold',
-              fontFamily: "'Coveas', sans-serif",
-              margin: 0,
-            }}
-          >
-            SHRI MADHWA VADIRAJA INSTITUTE
-          </h1>
-          <p
-            style={{
-              fontSize: '16px',
-              fontFamily: "'Open Sans', sans-serif",
-              margin: 0,
-            }}
-          >
-            of Technology and Management
-          </p>
-        </div>
-        <img
-          src="smvitm-college-logo.png"
-          alt="SMVITM Logo"
-          style={{ width: '30mm', height: '30mm', objectFit: 'contain' }}
-          loading="eager"
-        />
-      </div>
+     {/* Header */}
+<div
+  style={{
+    backgroundColor: '#800020',
+    height: '100px', // Adjust height to accommodate the additional line
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    color: 'white',
+    width: '100%',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+  }}
+>
+  <div style={{ textAlign: 'center', flex: 1 }}>
+    <h1
+      style={{
+        fontSize: '18px',
+        fontWeight: 'bold',
+        fontFamily: "'Coveas', sans-serif",
+        margin: 0,
+      }}
+    >
+      SHRI MADHWA VADIRAJA INSTITUTE
+    </h1>
+    <p
+      style={{
+        fontSize: '16px',
+        fontFamily: "'Open Sans', sans-serif",
+        margin: 0,
+      }}
+    >
+      OF TECHNOLOGY AND MANAGEMENT
+    </p>
+    <p
+      style={{
+        fontSize: '12px', // Smaller size for the additional line
+        fontFamily: "'Open Sans', sans-serif",
+        margin: 0,
+        marginTop: '4px', // Add slight spacing
+      }}
+    >
+      A Unit of Shri Sode Vadiraja Mutt Education Trust®, Udupi.
+    </p>
+  </div>
+  <img
+    src="smvitm-college-logo.png"
+    alt="SMVITM Logo"
+    style={{ width: '30mm', height: '30mm', objectFit: 'contain' }}
+    loading="eager"
+  />
+</div>
+
 
       {/* Main Content */}
       <div className="mt-8 px-8">
@@ -193,45 +207,47 @@ export default function PosterPreview({ data }) {
         )}
       </div>
 
-      {/* Location and Dates */}
-      <div className="mt-12 text-center px-8">
-        {location && (
-          <>
-            <p style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>To be held in</p>
-            <p
-              style={{
-                fontSize: '24px',
-                fontWeight: 'bold',
-                marginTop: '8px',
-                fontFamily: "'Roboto', sans-serif",
-              }}
-            >
-              {location}
-            </p>
-          </>
-        )}
-        {dates?.length > 0 && (
-          <>
-            <p style={{ fontSize: '20px', marginTop: '16px', fontFamily: "'Open Sans', sans-serif" }}>
-              on
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '16px 0' }}>
-              {dates.map((date, index) => (
-                <li
-                  key={index}
-                  style={{
-                    fontSize: '20px',
-                    fontFamily: "'Roboto', sans-serif",
-                    marginTop: '4px',
-                  }}
-                >
-                  {new Date(date).toLocaleDateString()} at {time}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </div>
+{/* Location and Dates */}
+<div className="mt-12 text-center px-8">
+  {location && (
+    <>
+      <p style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>To be held in</p>
+      <p
+        style={{
+          fontSize: '24px',
+          fontWeight: 'bold',
+          marginTop: '8px',
+          fontFamily: "'Roboto', sans-serif",
+        }}
+      >
+        {location}
+      </p>
+    </>
+  )}
+  {dates?.length > 0 && (
+    <>
+      <p style={{ fontSize: '20px', marginTop: '16px', fontFamily: "'Open Sans', sans-serif" }}>
+        on
+      </p>
+      <ul style={{ listStyle: 'none', padding: 0, margin: '16px 0' }}>
+        {dates.map((date, index) => (
+          <li
+            key={index}
+            style={{
+              fontSize: '20px',
+              fontFamily: "'Roboto', sans-serif",
+              marginTop: '4px',
+            }}
+          >
+            {new Date(date).toLocaleDateString()}
+            {index === dates.length - 1 && time && ` at ${time}`}
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</div>
+
 
       {/* Footer */}
       <div className="absolute bottom-0 left-0 right-0">
