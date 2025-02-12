@@ -6,12 +6,15 @@ import { Upload, X } from 'lucide-react';
 export default function PosterForm({ onSubmit, initialData }) {
   const [formData, setFormData] = useState({
     departmentName: '',
+    inAssociation: false,
     cellLogos: [],
     eventTitle: '',
+    eventType: '',
     speakerPhoto: '',
     speakerName: '',
     speakerDesignation: '',
-    date: new Date(),
+    isMultipleDates: false,
+    dates: [new Date()],
     time: '',
     location: '',
     registrationLink: '',
@@ -20,12 +23,12 @@ export default function PosterForm({ onSubmit, initialData }) {
 
   useEffect(() => {
     if (initialData) {
-      setFormData(prev => ({ ...prev, ...initialData }));
+      setFormData((prev) => ({ ...prev, ...initialData }));
     }
   }, [initialData]);
 
   const handleChange = useCallback((field, value) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const newData = { ...prev, [field]: value };
       onSubmit(newData);
       return newData;
@@ -35,18 +38,23 @@ export default function PosterForm({ onSubmit, initialData }) {
   const handleLogoUpload = useCallback((e) => {
     const files = Array.from(e.target.files || []);
     Promise.all(
-      files.map(file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      }))
-    ).then(logoUrls => {
-      handleChange('cellLogos', [...formData.cellLogos, ...logoUrls]);
-    }).catch(error => {
-      console.error('Error uploading logos:', error);
-      alert('Failed to upload logos. Please try again.');
-    });
+      files.map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          })
+      )
+    )
+      .then((logoUrls) => {
+        handleChange('cellLogos', [...formData.cellLogos, ...logoUrls]);
+      })
+      .catch((error) => {
+        console.error('Error uploading logos:', error);
+        alert('Failed to upload logos. Please try again.');
+      });
   }, [formData.cellLogos, handleChange]);
 
   const handlePhotoUpload = useCallback((e) => {
@@ -63,9 +71,32 @@ export default function PosterForm({ onSubmit, initialData }) {
     }
   }, [handleChange]);
 
-  const removeLogo = useCallback((index) => {
-    handleChange('cellLogos', formData.cellLogos.filter((_, i) => i !== index));
-  }, [formData.cellLogos, handleChange]);
+  const removeLogo = useCallback(
+    (index) => {
+      handleChange('cellLogos', formData.cellLogos.filter((_, i) => i !== index));
+    },
+    [formData.cellLogos, handleChange]
+  );
+
+  const handleDateChange = useCallback(
+    (index, date) => {
+      const newDates = [...formData.dates];
+      newDates[index] = date;
+      handleChange('dates', newDates);
+    },
+    [formData.dates, handleChange]
+  );
+
+  const addDateField = useCallback(() => {
+    handleChange('dates', [...formData.dates, new Date()]);
+  }, [formData.dates, handleChange]);
+
+  const removeDateField = useCallback(
+    (index) => {
+      handleChange('dates', formData.dates.filter((_, i) => i !== index));
+    },
+    [formData.dates, handleChange]
+  );
 
   return (
     <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
@@ -80,26 +111,36 @@ export default function PosterForm({ onSubmit, initialData }) {
         />
       </div>
 
+      <div className="flex items-center space-x-4">
+        <label className="block text-sm font-medium text-gray-700">In Association With</label>
+        <input
+          type="checkbox"
+          checked={formData.inAssociation}
+          onChange={(e) => handleChange('inAssociation', e.target.checked)}
+          className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+        />
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-700">Cell Logos</label>
         <div className="mt-1 flex flex-wrap items-center gap-4">
           <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
             <Upload className="h-5 w-5 mr-2" />
             Add Logo
-            <input 
-              type="file" 
-              className="hidden" 
-              accept="image/*" 
+            <input
+              type="file"
+              className="hidden"
+              accept="image/*"
               onChange={handleLogoUpload}
               multiple
             />
           </label>
           {formData.cellLogos.map((logo, index) => (
             <div key={index} className="relative group">
-              <img 
-                src={logo} 
-                alt={`Logo ${index + 1}`} 
-                className="h-12 w-12 object-contain rounded shadow-md" 
+              <img
+                src={logo}
+                alt={`Logo ${index + 1}`}
+                className="h-12 w-12 object-contain rounded shadow-md"
               />
               <button
                 type="button"
@@ -112,6 +153,7 @@ export default function PosterForm({ onSubmit, initialData }) {
           ))}
         </div>
       </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-700">Event Type</label>
         <select
@@ -123,6 +165,7 @@ export default function PosterForm({ onSubmit, initialData }) {
           <option value="Session">Session</option>
           <option value="Talk">Talk</option>
           <option value="Workshop">Workshop</option>
+          <option value="Training">Training</option>
         </select>
       </div>
 
@@ -138,71 +181,68 @@ export default function PosterForm({ onSubmit, initialData }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Speaker Photo</label>
-        <div className="mt-1 flex items-center space-x-4">
-          <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-            <Upload className="h-5 w-5 mr-2" />
-            Upload Photo
-            <input 
-              type="file" 
-              className="hidden" 
-              accept="image/*" 
-              onChange={handlePhotoUpload}
+        <label className="block text-sm font-medium text-gray-700">Event Dates</label>
+        <div className="mt-1">
+          <label className="inline-flex items-center text-sm text-gray-700">
+            <input
+              type="checkbox"
+              checked={formData.isMultipleDates}
+              onChange={(e) => handleChange('isMultipleDates', e.target.checked)}
+              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mr-2"
             />
+            Is this a multi-day event?
           </label>
-          {formData.speakerPhoto ? (
-            <img 
-              src={formData.speakerPhoto} 
-              alt="Speaker" 
-              className="h-24 w-24 object-cover rounded shadow-md" 
-            />
+          {formData.isMultipleDates ? (
+            <div className="space-y-2 mt-2">
+              {formData.dates.map((date, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <DatePicker
+                    selected={date}
+                    onChange={(newDate) => handleDateChange(index, newDate)}
+                    dateFormat="dd/MM/yyyy"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    required
+                  />
+                  {formData.dates.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => removeDateField(index)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addDateField}
+                className="text-indigo-500 hover:text-indigo-700 mt-2"
+              >
+                + Add another date
+              </button>
+            </div>
           ) : (
-            <span className="text-sm text-gray-500">No photo uploaded</span>
+            <DatePicker
+              selected={formData.dates[0]}
+              onChange={(date) => handleChange('dates', [date])}
+              dateFormat="dd/MM/yyyy"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              required
+            />
           )}
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Speaker Name</label>
+        <label className="block text-sm font-medium text-gray-700">Event Time</label>
         <input
-          type="text"
-          value={formData.speakerName}
-          onChange={(e) => handleChange('speakerName', e.target.value)}
+          type="time"
+          value={formData.time}
+          onChange={(e) => handleChange('time', e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           required
         />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Speaker Designation</label>
-        <input
-          type="text"
-          value={formData.speakerDesignation}
-          onChange={(e) => handleChange('speakerDesignation', e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          required
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Date</label>
-          <DatePicker
-            selected={formData.date}
-            onChange={(date) => handleChange('date', date)}
-            dateFormat="dd/MM/yyyy"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            required
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Time</label>
-          <input
-            onChange={(e) => handleChange('time', e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            required
-          />
-        </div>
       </div>
 
       <div>
