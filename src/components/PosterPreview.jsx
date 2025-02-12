@@ -10,62 +10,108 @@ export default function PosterPreview({ data }) {
     speakerPhoto,
     speakerDesignation,
     location,
-    date,
+    dates, // Updated to accept multiple dates
     time,
     registrationLink,
     eventType
   } = data;
 
   return (
-    <div className="w-[794px] h-[1123px] relative mx-auto overflow-hidden" id="poster">
+    <div
+      style={{
+        width: '210mm',
+        height: '297mm',
+        margin: '0 auto',
+        position: 'relative',
+        fontFamily: "'Roboto', sans-serif",
+        background: '#fff',
+        border: '1px solid #ddd',
+        padding: '10mm'
+      }}
+      id="poster"
+    >
+      {/* Header */}
       <div
-        className="absolute inset-0"
         style={{
-          backgroundImage: `url('https://media.licdn.com/dms/image/v2/C561BAQEPwPL0FtzJ9w/company-background_10000/company-background_10000/0/1595394497735/shri_madhwa_vadiraja_institute_of_technology_and_management_cover?e=2147483647&v=beta&t=iCbNHWzzqUYBBb34B6wEAK8RrywNWvrKIqz9-oxprVk')`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0.1, 
-          zIndex: -1,
-          borderRadius: '50%',
-          height: '900px', 
-          width: '700px',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#800020',
+          height: '80px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 16px',
+          color: 'white',
         }}
-      />
-      
-      <div className="bg-[#800020] h-[80px] flex items-center justify-between px-8">
-        <div className="flex-grow text-center">
-          <h1 className="text-md font-bold text-white">
-            SHRI MADHWA VADIRAJA INSTITUTE OF TECHNOLOGY AND MANAGEMENT
+      >
+        <div style={{ textAlign: 'center', flex: 1 }}>
+          <h1
+            style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              fontFamily: "'Coveas', sans-serif",
+              margin: 0,
+            }}
+          >
+            SHRI MADHWA VADIRAJA INSTITUTE
           </h1>
-          <p className="text-white text-sm">
-            A Unit of Shri Sode Vadiraja Mutt Educational Trust, Udupi.
+          <p
+            style={{
+              fontSize: '16px',
+              fontFamily: "'Open Sans', sans-serif",
+              margin: 0,
+            }}
+          >
+            of Technology and Management
           </p>
         </div>
         <img
           src="smvitm-college-logo.png"
           alt="SMVITM Logo"
-          className="w-29 h-16"
+          style={{ width: '30mm', height: '30mm', objectFit: 'contain' }}
           loading="eager"
         />
       </div>
+
+      {/* Main Content */}
       <div className="mt-8 px-8">
         {departmentName && (
-          <h2 className="text-2xl font-bold text-center">{departmentName}</h2>
+          <h2
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              fontFamily: "'Roboto', sans-serif",
+            }}
+          >
+            {departmentName}
+          </h2>
         )}
         {cellLogos?.length > 0 && (
           <>
-            <h3 className="text-xl text-center mt-4">In Association with</h3>
-            <div className="flex justify-center gap-8 mt-4">
+            <h3
+              style={{
+                fontSize: '20px',
+                textAlign: 'center',
+                marginTop: '16px',
+                fontFamily: "'Roboto', sans-serif",
+              }}
+            >
+              In Association With
+            </h3>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '16px',
+                marginTop: '16px',
+                flexWrap: 'wrap',
+              }}
+            >
               {cellLogos.map((logo, index) => (
                 <img
                   key={index}
                   src={logo}
                   alt={`Cell Logo ${index + 1}`}
-                  className="h-20 object-contain"
+                  style={{ height: '50px', objectFit: 'contain' }}
                   loading="eager"
                 />
               ))}
@@ -73,73 +119,174 @@ export default function PosterPreview({ data }) {
           </>
         )}
       </div>
+
+      {/* Event Details */}
       <div className="mt-12 text-center px-8">
         {eventType && (
           <>
-            <h3 className="text-xl">Organizing a {eventType}</h3>
-            <h3 className="text-xl mt-2">on</h3>
+            <h3 style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>
+              Organizing a {eventType}
+            </h3>
+            <h3 style={{ fontSize: '20px', marginTop: '8px', fontFamily: "'Open Sans', sans-serif" }}>
+              on
+            </h3>
           </>
         )}
         {eventTitle && (
-          <h2 className="text-4xl font-bold text-[#800020] mt-4 px-4">
+          <h2
+            style={{
+              fontSize: '32px',
+              fontWeight: 'bold',
+              color: '#800020',
+              marginTop: '16px',
+              fontFamily: "'Roboto', sans-serif",
+            }}
+          >
             {eventTitle}
           </h2>
         )}
       </div>
 
+      {/* Speaker Details */}
       <div className="mt-12 text-center px-8">
-        <h3 className="text-xl mb-4">By</h3>
+        <h3 style={{ fontSize: '20px', marginBottom: '16px', fontFamily: "'Open Sans', sans-serif" }}>
+          By
+        </h3>
         {speakerPhoto && (
           <div className="flex justify-center mb-4">
             <img
               src={speakerPhoto}
               alt={speakerName || 'Speaker'}
-              className="w-40 h-40 object-cover rounded-full shadow-lg"
+              style={{
+                width: '100px',
+                height: '100px',
+                objectFit: 'cover',
+                borderRadius: '50%',
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              }}
               loading="eager"
             />
           </div>
         )}
         {speakerName && (
-          <h2 className="text-3xl font-bold">{speakerName}</h2>
+          <h2
+            style={{
+              fontSize: '28px',
+              fontWeight: 'bold',
+              fontFamily: "'Roboto', sans-serif",
+            }}
+          >
+            {speakerName}
+          </h2>
         )}
         {speakerDesignation && (
-          <p className="text-xl text-[#800020] mt-2">{speakerDesignation}</p>
+          <p
+            style={{
+              fontSize: '20px',
+              color: '#800020',
+              marginTop: '8px',
+              fontFamily: "'Open Sans', sans-serif",
+            }}
+          >
+            {speakerDesignation}
+          </p>
         )}
       </div>
 
+      {/* Location and Dates */}
       <div className="mt-12 text-center px-8">
         {location && (
           <>
-            <p className="text-xl">To be held in</p>
-            <p className="text-2xl font-bold mt-2">{location}</p>
-          </>
-        )}
-        {date && time && (
-          <>
-            <p className="text-xl mt-4">on</p>
-            <p className="text-2xl mt-2">
-              {new Date(date).toLocaleDateString()} at {time}
+            <p style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>To be held in</p>
+            <p
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                marginTop: '8px',
+                fontFamily: "'Roboto', sans-serif",
+              }}
+            >
+              {location}
             </p>
           </>
         )}
+        {dates?.length > 0 && (
+          <>
+            <p style={{ fontSize: '20px', marginTop: '16px', fontFamily: "'Open Sans', sans-serif" }}>
+              on
+            </p>
+            {dates.map((date, index) => (
+              <p
+                key={index}
+                style={{
+                  fontSize: '20px',
+                  fontFamily: "'Roboto', sans-serif",
+                  marginTop: '4px',
+                }}
+              >
+                {new Date(date).toLocaleDateString()} at {time}
+              </p>
+            ))}
+          </>
+        )}
       </div>
+
+      {/* Footer */}
       <div className="absolute bottom-0 left-0 right-0">
-        <p className="text-2xl font-bold text-[#800020] text-center mb-6">
+        <p
+          style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+            color: '#800020',
+            textAlign: 'center',
+            marginBottom: '16px',
+            fontFamily: "'Roboto', sans-serif",
+          }}
+        >
           ALL ARE CORDIALLY INVITED
         </p>
         {registrationLink && (
-          <div className="absolute bottom-20 right-8">
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '80px',
+              right: '16px',
+            }}
+          >
             <QRCode
               value={registrationLink}
               size={120}
               level="H"
-              className="bg-white p-2"
+              style={{ backgroundColor: 'white', padding: '8px' }}
             />
-            <p className="text-sm mt-2 text-center">Scan to Register</p>
+            <p
+              style={{
+                fontSize: '12px',
+                marginTop: '8px',
+                textAlign: 'center',
+                fontFamily: "'Open Sans', sans-serif",
+              }}
+            >
+              Scan to Register
+            </p>
           </div>
         )}
-        <div className="bg-[#800020] h-[60px] flex items-center justify-center">
-          <p className="text-white text-lg">
+        <div
+          style={{
+            backgroundColor: '#800020',
+            height: '60px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <p
+            style={{
+              color: 'white',
+              fontSize: '18px',
+              fontFamily: "'Open Sans', sans-serif",
+            }}
+          >
             SMVITM - Engineering your Career and Character with Care
           </p>
         </div>
