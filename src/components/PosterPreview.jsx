@@ -208,65 +208,81 @@ export default function PosterPreview({ data }) {
         )}
       </div>
 
-      {/* Location and Dates */}
-      <div style={{ marginTop: '40px', textAlign: 'center', padding: '0 16px' }}>
-        {location && (
-          <p
-            style={{
-              fontSize: '20px',
-              fontFamily: "'Open Sans', sans-serif",
-            }}
-          >
-            To be held in
-          </p>
-        )}
-        {location && (
-          <p
-            style={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              marginTop: '8px',
-              fontFamily: "'Roboto', sans-serif",
-            }}
-          >
-            {location}
-          </p>
-        )}
-        {dates?.length > 0 && (
-          <>
-            <p
+    {/* Location and Dates */}
+<div style={{ marginTop: '40px', textAlign: 'center', padding: '0 16px' }}>
+  {location && (
+    <p
+      style={{
+        fontSize: '20px',
+        fontFamily: "'Open Sans', sans-serif",
+      }}
+    >
+      To be held in
+    </p>
+  )}
+  {location && (
+    <p
+      style={{
+        fontSize: '24px',
+        fontWeight: 'bold',
+        marginTop: '8px',
+        fontFamily: "'Roboto', sans-serif",
+      }}
+    >
+      {location}
+    </p>
+  )}
+  {dates?.length > 0 && (
+    <>
+      <p
+        style={{
+          fontSize: '20px',
+          marginTop: '16px',
+          fontFamily: "'Open Sans', sans-serif",
+        }}
+      >
+        on
+      </p>
+      <ul style={{ listStyle: 'none', padding: 0, marginTop: '8px' }}>
+        {dates.map((date, index) => {
+          const isValidDate = !isNaN(new Date(date).getTime()); // Validate the date
+          const formattedDate = isValidDate
+            ? new Date(date).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              }) // Indian format (dd/mm/yyyy)
+            : 'Invalid Date';
+
+          const isLastDate = index === dates.length - 1; // Check if it's the last date
+          const isValidTime = time && !isNaN(new Date(`1970-01-01T${time}`).getTime()); // Validate the time
+          const formattedTime = isValidTime
+            ? new Date(`1970-01-01T${time}`).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true,
+              })
+            : '';
+
+          return (
+            <li
+              key={index}
               style={{
                 fontSize: '20px',
-                marginTop: '16px',
-                fontFamily: "'Open Sans', sans-serif",
+                fontFamily: "'Roboto', sans-serif",
+                marginTop: '4px',
               }}
             >
-              on
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, marginTop: '8px' }}>
-              {dates.map((date, index) => (
-                <li
-                  key={index}
-                  style={{
-                    fontSize: '20px',
-                    fontFamily: "'Roboto', sans-serif",
-                    marginTop: '4px',
-                  }}
-                >{
-  new Date(date).toLocaleDateString()
-}
-{
-  index === dates.length - 1 &&
-  time &&
-  ` at ${new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`
-}
+              {formattedDate}
+              {isLastDate && formattedTime && ` at ${formattedTime}`}
+            </li>
+          );
+        })}
+      </ul>
+    </>
+  )}
+</div>
 
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </div>
 
       {/* Footer */}
       <div style={{ marginTop: '40px', textAlign: 'center', position: 'relative' }}>
