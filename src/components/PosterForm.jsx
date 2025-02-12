@@ -190,7 +190,7 @@ export default function PosterForm({ onSubmit, initialData }) {
               onChange={(e) => handleChange('isMultipleDates', e.target.checked)}
               className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mr-2"
             />
-            Is this a multi-day event?
+            Is this a multi-day event? <br></br>
           </label>
           {formData.isMultipleDates ? (
             <div className="space-y-2 mt-2">
