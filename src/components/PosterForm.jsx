@@ -180,59 +180,89 @@ export default function PosterForm({ onSubmit, initialData }) {
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Event Dates</label>
-        <div className="mt-1">
-          <label className="inline-flex items-center text-sm text-gray-700">
-            <input
-              type="checkbox"
-              checked={formData.isMultipleDates}
-              onChange={(e) => handleChange('isMultipleDates', e.target.checked)}
-              className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mr-2"
-            />
-            Is this a multi-day event? <br></br>
-          </label>
-          {formData.isMultipleDates ? (
-            <div className="space-y-2 mt-2">
-              {formData.dates.map((date, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <DatePicker
-                    selected={date}
-                    onChange={(newDate) => handleDateChange(index, newDate)}
-                    dateFormat="dd/MM/yyyy"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                    required
-                  />
-                  {formData.dates.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeDateField(index)}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addDateField}
-                className="text-indigo-500 hover:text-indigo-700 mt-2"
-              >
-                + Add another date
-              </button>
-            </div>
-          ) : (
+<div style={{ marginBottom: '16px' }}>
+  <label style={{ fontWeight: 'bold', fontSize: '14px', color: '#4a4a4a', display: 'block', marginBottom: '8px' }}>
+    Event Dates
+  </label>
+  <div>
+    <label style={{ display: 'flex', alignItems: 'center', fontSize: '14px', color: '#4a4a4a', marginBottom: '8px' }}>
+      <input
+        type="checkbox"
+        checked={formData.isMultipleDates}
+        onChange={(e) => handleChange('isMultipleDates', e.target.checked)}
+        style={{ marginRight: '8px', height: '16px', width: '16px' }}
+      />
+      Is this a multi-day event?
+    </label>
+    {formData.isMultipleDates ? (
+      <div style={{ marginTop: '8px' }}>
+        {formData.dates.map((date, index) => (
+          <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
             <DatePicker
-              selected={formData.dates[0]}
-              onChange={(date) => handleChange('dates', [date])}
+              selected={date}
+              onChange={(newDate) => handleDateChange(index, newDate)}
               dateFormat="dd/MM/yyyy"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              style={{
+                padding: '8px',
+                width: '100%',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              }}
               required
             />
-          )}
-        </div>
+            {formData.dates.length > 1 && (
+              <button
+                type="button"
+                onClick={() => removeDateField(index)}
+                style={{
+                  marginLeft: '8px',
+                  color: '#d9534f',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                Remove
+              </button>
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={addDateField}
+          style={{
+            display: 'inline-block',
+            marginTop: '8px',
+            color: '#0275d8',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            textDecoration: 'underline',
+          }}
+        >
+          + Add another date
+        </button>
       </div>
+    ) : (
+      <DatePicker
+        selected={formData.dates[0]}
+        onChange={(date) => handleChange('dates', [date])}
+        dateFormat="dd/MM/yyyy"
+        style={{
+          padding: '8px',
+          width: '100%',
+          borderRadius: '4px',
+          border: '1px solid #ccc',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          marginTop: '8px',
+        }}
+        required
+      />
+    )}
+  </div>
+</div>
+
 
       <div>
         <label className="block text-sm font-medium text-gray-700">Event Time</label>
