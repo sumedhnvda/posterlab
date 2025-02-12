@@ -6,7 +6,6 @@ import { Upload, X } from 'lucide-react';
 export default function PosterForm({ onSubmit, initialData }) {
   const [formData, setFormData] = useState({
     departmentName: '',
-    inAssociation: false,
     cellLogos: [],
     eventTitle: '',
     eventType: '',
@@ -108,16 +107,6 @@ export default function PosterForm({ onSubmit, initialData }) {
           onChange={(e) => handleChange('departmentName', e.target.value)}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           required
-        />
-      </div>
-
-      <div className="flex items-center space-x-4">
-        <label className="block text-sm font-medium text-gray-700">In Association With</label>
-        <input
-          type="checkbox"
-          checked={formData.inAssociation}
-          onChange={(e) => handleChange('inAssociation', e.target.checked)}
-          className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
         />
       </div>
 
