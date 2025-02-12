@@ -27,72 +27,73 @@ export default function PosterPreview({ data }) {
         background: '#fff',
         border: '1px solid #ddd',
         padding: '10mm',
+        overflow: 'hidden', // Ensures no content overflows the poster
       }}
       id="poster"
     >
-     {/* Header */}
-<div
-  style={{
-    backgroundColor: '#800020',
-    height: '100px', // Adjust height to accommodate the additional line
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    color: 'white',
-    width: '100%',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-  }}
->
-  <div style={{ textAlign: 'center', flex: 1 }}>
-    <h1
-      style={{
-        fontSize: '18px',
-        fontWeight: 'bold',
-        fontFamily: "'Coveas', sans-serif",
-        margin: 0,
-      }}
-    >
-      SHRI MADHWA VADIRAJA INSTITUTE
-    </h1>
-    <p
-      style={{
-        fontSize: '16px',
-        fontFamily: "'Open Sans', sans-serif",
-        margin: 0,
-      }}
-    >
-      OF TECHNOLOGY AND MANAGEMENT
-    </p>
-    <p
-      style={{
-        fontSize: '12px', // Smaller size for the additional line
-        fontFamily: "'Open Sans', sans-serif",
-        margin: 0,
-        marginTop: '4px', // Add slight spacing
-      }}
-    >
-      A Unit of Shri Sode Vadiraja Mutt Education Trust®, Udupi.
-    </p>
-  </div>
-  <img
-    src="smvitm-college-logo.png"
-    alt="SMVITM Logo"
-    style={{ width: '30mm', height: '30mm', objectFit: 'contain' }}
-    loading="eager"
-  />
-</div>
+      {/* Header */}
+      <div
+        style={{
+          backgroundColor: '#800020',
+          height: '100px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          color: 'white',
+          padding: '0 16px',
+        }}
+      >
+        <div style={{ textAlign: 'center', flex: 1 }}>
+          <h1
+            style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              margin: 0,
+              fontFamily: "'Coveas', sans-serif",
+            }}
+          >
+            SHRI MADHWA VADIRAJA INSTITUTE
+          </h1>
+          <p
+            style={{
+              fontSize: '18px',
+              fontWeight: 'bold',
+              margin: 0,
+              fontFamily: "'Coveas', sans-serif",
+            }}
+          >
+            OF TECHNOLOGY AND MANAGEMENT
+          </p>
+          <p
+            style={{
+              fontSize: '12px',
+              margin: 0,
+              marginTop: '4px',
+              fontFamily: "'Open Sans', sans-serif",
+            }}
+          >
+            A Unit of Shri Sode Vadiraja Mutt Education Trust ®, Udupi.
+          </p>
+        </div>
+        <img
+          src="smvitm-college-logo.png"
+          alt="SMVITM Logo"
+          style={{
+            width: '30mm',
+            height: '30mm',
+            objectFit: 'contain',
+          }}
+          loading="eager"
+        />
+      </div>
 
-
-      {/* Main Content */}
-      <div className="mt-8 px-8">
+      {/* Department Section */}
+      <div style={{ marginTop: '120px', textAlign: 'center' }}>
         {departmentName && (
           <h2
             style={{
               fontSize: '24px',
               fontWeight: 'bold',
-              textAlign: 'center',
               fontFamily: "'Coveas', sans-serif",
             }}
           >
@@ -104,7 +105,6 @@ export default function PosterPreview({ data }) {
             <h3
               style={{
                 fontSize: '20px',
-                textAlign: 'center',
                 marginTop: '16px',
                 fontFamily: "'Roboto', sans-serif",
               }}
@@ -116,7 +116,7 @@ export default function PosterPreview({ data }) {
                 display: 'flex',
                 justifyContent: 'center',
                 gap: '16px',
-                marginTop: '16px',
+                marginTop: '8px',
                 flexWrap: 'wrap',
               }}
             >
@@ -134,17 +134,17 @@ export default function PosterPreview({ data }) {
         )}
       </div>
 
-      {/* Event Details */}
-      <div className="mt-12 text-center px-8">
+      {/* Event Details Section */}
+      <div style={{ marginTop: '40px', textAlign: 'center', padding: '0 16px' }}>
         {eventType && (
-          <>
-            <h3 style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>
-              Organizing a {eventType}
-            </h3>
-            <h3 style={{ fontSize: '20px', marginTop: '8px', fontFamily: "'Open Sans', sans-serif" }}>
-              on
-            </h3>
-          </>
+          <h3
+            style={{
+              fontSize: '20px',
+              fontFamily: "'Open Sans', sans-serif",
+            }}
+          >
+            Organizing a {eventType}
+          </h3>
         )}
         {eventTitle && (
           <h2
@@ -161,21 +161,21 @@ export default function PosterPreview({ data }) {
         )}
       </div>
 
-      {/* Speaker Details */}
-      <div className="mt-12 text-center px-8">
-        <h3 style={{ fontSize: '20px', marginBottom: '16px', fontFamily: "'Open Sans', sans-serif" }}>
-          By
-        </h3>
+      {/* Speaker Details Section */}
+      <div style={{ marginTop: '40px', textAlign: 'center', padding: '0 16px' }}>
+        {speakerName && (
+          <h3 style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>By</h3>
+        )}
         {speakerPhoto && (
-          <div className="flex justify-center mb-4">
+          <div style={{ marginTop: '16px' }}>
             <img
               src={speakerPhoto}
               alt={speakerName || 'Speaker'}
               style={{
                 width: '100px',
                 height: '100px',
-                objectFit: 'cover',
                 borderRadius: '50%',
+                objectFit: 'cover',
                 boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
               }}
               loading="eager"
@@ -187,6 +187,7 @@ export default function PosterPreview({ data }) {
             style={{
               fontSize: '28px',
               fontWeight: 'bold',
+              marginTop: '16px',
               fontFamily: "'Roboto', sans-serif",
             }}
           >
@@ -207,56 +208,73 @@ export default function PosterPreview({ data }) {
         )}
       </div>
 
-{/* Location and Dates */}
-<div className="mt-12 text-center px-8">
-  {location && (
-    <>
-      <p style={{ fontSize: '20px', fontFamily: "'Open Sans', sans-serif" }}>To be held in</p>
-      <p
-        style={{
-          fontSize: '24px',
-          fontWeight: 'bold',
-          marginTop: '8px',
-          fontFamily: "'Roboto', sans-serif",
-        }}
-      >
-        {location}
-      </p>
-    </>
-  )}
-  {dates?.length > 0 && (
-    <>
-      <p style={{ fontSize: '20px', marginTop: '16px', fontFamily: "'Open Sans', sans-serif" }}>
-        on
-      </p>
-      <ul style={{ listStyle: 'none', padding: 0, margin: '16px 0' }}>
-        {dates.map((date, index) => (
-          <li
-            key={index}
+      {/* Location and Dates */}
+      <div style={{ marginTop: '40px', textAlign: 'center', padding: '0 16px' }}>
+        {location && (
+          <p
             style={{
               fontSize: '20px',
-              fontFamily: "'Roboto', sans-serif",
-              marginTop: '4px',
+              fontFamily: "'Open Sans', sans-serif",
             }}
           >
-            {new Date(date).toLocaleDateString()}
-            {index === dates.length - 1 && time && ` at ${time}`}
-          </li>
-        ))}
-      </ul>
-    </>
-  )}
-</div>
+            To be held in
+          </p>
+        )}
+        {location && (
+          <p
+            style={{
+              fontSize: '24px',
+              fontWeight: 'bold',
+              marginTop: '8px',
+              fontFamily: "'Roboto', sans-serif",
+            }}
+          >
+            {location}
+          </p>
+        )}
+        {dates?.length > 0 && (
+          <>
+            <p
+              style={{
+                fontSize: '20px',
+                marginTop: '16px',
+                fontFamily: "'Open Sans', sans-serif",
+              }}
+            >
+              on
+            </p>
+            <ul style={{ listStyle: 'none', padding: 0, marginTop: '8px' }}>
+              {dates.map((date, index) => (
+                <li
+                  key={index}
+                  style={{
+                    fontSize: '20px',
+                    fontFamily: "'Roboto', sans-serif",
+                    marginTop: '4px',
+                  }}
+                >{
+  new Date(date).toLocaleDateString()
+}
+{
+  index === dates.length - 1 &&
+  time &&
+  ` at ${new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}`
+}
 
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
 
       {/* Footer */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div style={{ marginTop: '40px', textAlign: 'center', position: 'relative' }}>
         <p
           style={{
             fontSize: '24px',
             fontWeight: 'bold',
             color: '#800020',
-            textAlign: 'center',
             marginBottom: '16px',
             fontFamily: "'Roboto', sans-serif",
           }}
@@ -296,6 +314,7 @@ export default function PosterPreview({ data }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            marginTop: '40px',
           }}
         >
           <p
